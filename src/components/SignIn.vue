@@ -26,13 +26,21 @@
         </span>
       </div>
       <input class="btn btn-primary mt-2" type="submit" value="Sign in" />
+      <br />
+      <p>
+        Don't have an Account?<strong class="text-primary" @click="myFn()"
+          >Sign Up</strong
+        >
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  props: {
+    myFn: Function
+  },
   data() {
     return {
       showPassword: false,
@@ -51,30 +59,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.input-gr {
-  margin: 5px;
-}
-.input-gr > input {
-  height: 45px;
-  width: 100%;
-  padding: 0 10px;
-  border-radius: 30px;
-  border: 1px solid silver;
-  font-size: 16px;
-}
-
-.append > i {
-  font-size: 20px;
-  color: grey;
-  z-index: 2000;
-}
-.append {
-  float: right;
-  margin-top: -37px;
-  margin-right: 20px;
-  position: relative;
-  cursor: pointer;
-}
-</style>

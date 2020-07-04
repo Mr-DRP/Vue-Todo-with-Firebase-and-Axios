@@ -1,19 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Signin from "../views/Signin.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Sign In",
-    component: Signin
+    name: "Account",
+    component: Account
   }
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 });
 
 export default router;
