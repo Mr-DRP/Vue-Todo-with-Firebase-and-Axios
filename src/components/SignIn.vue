@@ -5,27 +5,40 @@
   >
     <div class="card-header bg-primary">Sign In</div>
     <div class="card-body">
-      <div class="input-gr">
-        <input type="text" placeholder="Email or Username" />
-        <span class="append">
-          <i class="fa fa-envelope"></i>
-        </span>
-      </div>
-      <div class="input-gr">
+      <form @submit.prevent="onSubmit">
+        <div class="input-gr">
+          <input
+            v-model="email"
+            type="text"
+            placeholder="Email or Username"
+            required
+          />
+          <span class="append">
+            <i class="fa fa-envelope"></i>
+          </span>
+        </div>
+        <div class="input-gr">
+          <input
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            required
+          />
+          <span class="append">
+            <i
+              class="fa"
+              :class="[isEmpty ? lockClass : changeEyeIcon]"
+              @click="showPassword = !showPassword"
+            ></i>
+          </span>
+        </div>
         <input
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          placeholder="Password"
+          class="btn btn-primary mt-2"
+          style="border-radius: 10px;"
+          type="submit"
+          value="Sign in"
         />
-        <span class="append">
-          <i
-            class="fa"
-            :class="[isEmpty ? lockClass : changeEyeIcon]"
-            @click="showPassword = !showPassword"
-          ></i>
-        </span>
-      </div>
-      <input class="btn btn-primary mt-2" type="submit" value="Sign in" />
+      </form>
       <br />
       <p>
         Don't have an Account?<strong class="text-primary" @click="myFn()"
@@ -46,6 +59,7 @@ export default {
       showPassword: false,
       lockClass: "fa-lock",
       eyeClass: "fa-eye",
+      email: "",
       password: ""
     };
   },
@@ -55,6 +69,18 @@ export default {
     },
     changeEyeIcon() {
       return this.isEmpty ? "" : this.showPassword ? "fa-eye" : "fa-eye-slash";
+    }
+  },
+  methods: {
+    onSubmit() {
+      const formData = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("login", {
+        email: formData.email,
+        password: formData.password
+      });
     }
   }
 };

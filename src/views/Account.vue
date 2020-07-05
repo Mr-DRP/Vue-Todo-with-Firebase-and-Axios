@@ -38,7 +38,6 @@ export default {
 }
 
 .fade-leave {
-  
 }
 
 .fade-leave-active {
@@ -58,6 +57,11 @@ export default {
   border-radius: 30px;
   border: 1px solid silver;
   font-size: 16px;
+  outline: none;
+}
+
+.input-gr > input:focus {
+  border: 1px solid rgb(10, 99, 216);
 }
 
 .append > i {
@@ -72,5 +76,8 @@ export default {
   margin-right: 35px;
   position: relative;
   cursor: pointer;
+}
+.btn {
+  border-radius: 20px;
 }
 </style>

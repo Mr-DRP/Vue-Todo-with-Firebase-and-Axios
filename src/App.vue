@@ -4,8 +4,4 @@
   </div>
 </template>
 
-<style>
-.body {
-  background-color: lightblue;
-}
-</style>
+<style></style>
