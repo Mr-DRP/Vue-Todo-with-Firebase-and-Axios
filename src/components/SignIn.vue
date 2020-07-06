@@ -41,7 +41,7 @@
       </form>
       <br />
       <p>
-        Don't have an Account?<strong class="text-primary" @click="myFn()"
+        Don't have an Account?<strong class="text-primary point" @click="myFn()"
           >Sign Up</strong
         >
       </p>
@@ -77,10 +77,7 @@ export default {
         email: this.email,
         password: this.password
       };
-      this.$store.dispatch("login", {
-        email: formData.email,
-        password: formData.password
-      });
+      this.$store.dispatch("login", formData);
     }
   }
 };

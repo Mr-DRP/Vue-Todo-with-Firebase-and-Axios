@@ -58,7 +58,9 @@
       </form>
       <br />
       <p>
-        Already have an account?<strong class="text-primary" @click="myFn()"
+        Already have an account?<strong
+          class="text-primary point"
+          @click="myFn()"
           >Sign In Now</strong
         >
       </p>
@@ -93,10 +95,7 @@ export default {
           email: this.email,
           password: this.password
         };
-        this.$store.dispatch("signup", {
-          email: formData.email,
-          password: formData.password
-        });
+        this.$store.dispatch("signup", formData);
       } else {
         this.notmatched = true;
       }

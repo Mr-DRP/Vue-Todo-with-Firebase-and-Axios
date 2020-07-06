@@ -6,7 +6,7 @@ import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-axios.defaults.baseURL = "https://identitytoolkit.googleapis.com/v1";
+axios.defaults.baseURL = "https://vue-todor.firebaseio.com";
 
 Vue.config.productionTip = false;
 

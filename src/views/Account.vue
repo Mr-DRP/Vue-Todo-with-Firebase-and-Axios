@@ -13,6 +13,7 @@ export default {
       selectedComponent: "appSignin"
     };
   },
+
   methods: {
     switchComp() {
       this.selectedComponent === "appSignin"
@@ -20,6 +21,7 @@ export default {
         : (this.selectedComponent = "appSignin");
     }
   },
+
   components: {
     appSignin: Signin,
     appSignup: Signup
@@ -46,6 +48,9 @@ export default {
 }
 
 /* animation end */
+.point {
+  cursor: pointer;
+}
 
 .input-gr {
   margin: 5px;
