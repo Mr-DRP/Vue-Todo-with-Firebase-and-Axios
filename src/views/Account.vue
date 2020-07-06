@@ -1,12 +1,17 @@
 <template>
   <transition name="fade" mode="out-in">
-    <component :is="selectedComponent" :myFn="switchComp"></component>
+    <component
+      :is="selectedComponent"
+      :myFn="switchComp"
+      :myComp="selectedComponent"
+    ></component>
   </transition>
 </template>
 
 <script>
 import Signin from "../components/SignIn.vue";
 import Signup from "../components/SignUp.vue";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -16,10 +21,14 @@ export default {
 
   methods: {
     switchComp() {
-      this.selectedComponent === "appSignin"
-        ? (this.selectedComponent = "appSignup")
-        : (this.selectedComponent = "appSignin");
-    }
+      this.clearAlert(),
+        this.selectedComponent === "appSignin"
+          ? (this.selectedComponent = "appSignup")
+          : (this.selectedComponent = "appSignin");
+    },
+    ...mapActions({
+      clearAlert: "clearError"
+    })
   },
 
   components: {

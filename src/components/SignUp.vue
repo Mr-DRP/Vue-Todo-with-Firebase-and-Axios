@@ -5,6 +5,12 @@
   >
     <div class="card-header bg-primary">Sign In</div>
     <div class="card-body">
+      <div class="col">
+        <div v-if="alert.message" :class="'alert ' + alert.type">
+          {{ alert.message }}
+        </div>
+        <router-view></router-view>
+      </div>
       <form @submit.prevent="onSubmit">
         <div class="input-gr">
           <input
@@ -69,9 +75,11 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   props: {
-    myFn: Function
+    myFn: Function,
+    myComp: String
   },
   data() {
     return {
@@ -95,7 +103,10 @@ export default {
           email: this.email,
           password: this.password
         };
-        this.$store.dispatch("signup", formData);
+        this.$store
+          .dispatch("signup", formData)
+          .then(() => this.$router.push("/"))
+          .catch(() => {});
       } else {
         this.notmatched = true;
       }
@@ -117,7 +128,10 @@ export default {
         : this.showConfirm
         ? "fa-eye"
         : "fa-eye-slash";
-    }
+    },
+    ...mapState({
+      alert: state => state.alert
+    })
   }
 };
 </script>

@@ -8,8 +8,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 axios.defaults.baseURL = "https://vue-todor.firebaseio.com";
 
-Vue.config.productionTip = false;
-
 new Vue({
   router,
   store,

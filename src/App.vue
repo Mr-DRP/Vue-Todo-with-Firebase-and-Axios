@@ -4,4 +4,10 @@
   </div>
 </template>
 
-<style></style>
+<script>
+export default {
+  created() {
+    this.$store.dispatch("tryAutoLogin");
+  }
+};
+</script>

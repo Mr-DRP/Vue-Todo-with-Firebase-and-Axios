@@ -5,6 +5,14 @@
   >
     <div class="card-header bg-primary">Sign In</div>
     <div class="card-body">
+      <div class="row">
+        <div class="offset-sm-3">
+          <div v-if="alert.message" :class="'alert ' + alert.type">
+            {{ alert.message }}
+          </div>
+          <router-view></router-view>
+        </div>
+      </div>
       <form @submit.prevent="onSubmit">
         <div class="input-gr">
           <input
@@ -50,6 +58,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   props: {
     myFn: Function
@@ -69,7 +78,10 @@ export default {
     },
     changeEyeIcon() {
       return this.isEmpty ? "" : this.showPassword ? "fa-eye" : "fa-eye-slash";
-    }
+    },
+    ...mapState({
+      alert: state => state.alert
+    })
   },
   methods: {
     onSubmit() {
@@ -77,7 +89,10 @@ export default {
         email: this.email,
         password: this.password
       };
-      this.$store.dispatch("login", formData);
+      this.$store
+        .dispatch("login", formData)
+        .then(() => this.$router.push("/"))
+        .catch(() => {});
     }
   }
 };
