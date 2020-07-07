@@ -12,13 +12,28 @@ export default new Vuex.Store({
     alert: {
       message: "",
       type: ""
-    }
+    },
+    todos: []
   },
 
   mutations: {
     authUser(state, userData) {
       state.idToken = userData.token;
       state.userId = userData.userId;
+    },
+
+    addTodo(state, todos) {
+      state.todos.push(todos);
+    },
+
+    fetchTodo(state, todos) {
+      state.todos = todos;
+    },
+
+    deleteTodo(state, key) {
+      const index = state.todos.findIndex(item => item.id == key);
+      console.log(state.todos[index]);
+      state.todos.splice(index, 1);
     },
 
     saveError(state, error) {
@@ -101,11 +116,14 @@ export default new Vuex.Store({
       if (!token) {
         return;
       }
-      const expirationDate = localStorage.getItem("expirationDate");
+      const expirationDate = new Date(localStorage.getItem("expirationDate"));
       const now = new Date();
       if (now >= expirationDate) {
         return;
       } else {
+        console.log(expirationDate);
+        console.log(now);
+        console.log(now - expirationDate);
         const userId = localStorage.getItem("userId");
         commit("authUser", { userId, token });
       }
@@ -120,6 +138,71 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res);
           console.log(userData);
+        })
+        .catch(error => console.log(error));
+    },
+
+    addTodo({ commit }, todos) {
+      axios
+        .post(
+          "/users/" +
+            this.state.userId +
+            "/todos.json?auth=" +
+            this.state.idToken,
+          {
+            title: todos.title,
+            timestamp: { ".sv": "timestamp" },
+            status: false
+          }
+        )
+        .then(res => {
+          commit("addTodo", {
+            title: todos.title,
+            status: false,
+            id: res.data.name
+          });
+        })
+        .catch(error => console.log(error));
+    },
+
+    fetchTodo({ commit }) {
+      axios
+        .get(
+          "/users/" +
+            this.state.userId +
+            "/todos.json?auth=" +
+            this.state.idToken
+        )
+        .then(res => {
+          let tempTodos = [];
+          for (var key in res.data) {
+            var todoEach = {
+              title: res.data[key].title,
+              timestamp: res.data[key].timestamp,
+              status: res.data[key].status,
+              id: key
+            };
+            tempTodos.push(todoEach);
+          }
+          const tempSorted = tempTodos.sort(
+            (a, b) => a.timestamp - b.timestamp
+          );
+          commit("fetchTodo", tempSorted);
+        });
+    },
+
+    deleteTodo({ commit }, key) {
+      axios
+        .delete(
+          "/users/" +
+            this.state.userId +
+            "/todos/" +
+            key +
+            ".json?auth=" +
+            this.state.idToken
+        )
+        .then(res => {
+          commit("deleteTodo", key);
         })
         .catch(error => console.log(error));
     },
@@ -156,7 +239,5 @@ export default new Vuex.Store({
     clearError({ commit }) {
       commit("clear");
     }
-  },
-
-  modules: {}
+  }
 });

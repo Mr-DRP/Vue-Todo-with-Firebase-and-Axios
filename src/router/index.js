@@ -27,13 +27,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  const expirationDate = localStorage.getItem("expirationDate");
+  const expirationDate = new Date(localStorage.getItem("expirationDate"));
   const now = new Date();
   var isLogged = false;
   if (token && !(now >= expirationDate)) {
     isLogged = true;
   }
   if (!isLogged && to.path !== "/account") {
+    localStorage.clear();
     next("/account");
   } else {
     next();
