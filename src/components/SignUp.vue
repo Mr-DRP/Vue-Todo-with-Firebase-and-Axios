@@ -9,7 +9,6 @@
         <div v-if="alert.message" :class="'alert ' + alert.type">
           {{ alert.message }}
         </div>
-        <router-view></router-view>
       </div>
       <form @submit.prevent="onSubmit">
         <div class="input-gr">

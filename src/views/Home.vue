@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-7 mt-5">
+  <div class="container col-lg-7 col-sm-10 mt-5" style="font-size: 25px;">
     <form @submit.prevent="onSubmit">
       <div class="input-group mb-3">
         <input
@@ -17,8 +17,12 @@
     </form>
     <transition-group name="fade" mode="out-in">
       <div v-for="todo in todos" :key="todo.id" class="todo-item p-1">
-        <input type="checkbox" />
-        <div class="pl-4 mr-auto">
+        <input
+          type="checkbox"
+          v-model="todo.status"
+          @change="changeStatus({ status: todo.status, id: todo.id })"
+        />
+        <div class="pl-4 mr-auto" :class="{ done: todo.status }">
           {{ todo.title }}
         </div>
         <div class="remove-item" :key="todo.id" @click="deleteTodo(todo.id)">
@@ -42,12 +46,15 @@ export default {
   },
   methods: {
     onSubmit() {
+      if (this.title === "") {
+        return;
+      }
       this.addTodo({
         title: this.title
       });
       this.title = "";
     },
-    ...mapActions(["fetchTodo", "addTodo", "deleteTodo"])
+    ...mapActions(["fetchTodo", "addTodo", "deleteTodo", "changeStatus"])
   },
   created() {
     this.fetchTodo();
@@ -83,5 +90,8 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
   opacity: 0;
+}
+.done {
+  text-decoration: line-through;
 }
 </style>

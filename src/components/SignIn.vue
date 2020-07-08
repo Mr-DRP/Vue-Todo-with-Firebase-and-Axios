@@ -5,14 +5,10 @@
   >
     <div class="card-header bg-primary">Sign In</div>
     <div class="card-body">
-      <div class="row">
-        <div class="offset-sm-3">
-          <div v-if="alert.message" :class="'alert ' + alert.type">
-            {{ alert.message }}
-          </div>
-          <router-view></router-view>
-        </div>
+      <div v-if="alert.message" :class="'alert ' + alert.type">
+        {{ alert.message }}
       </div>
+
       <form @submit.prevent="onSubmit">
         <div class="input-gr">
           <input

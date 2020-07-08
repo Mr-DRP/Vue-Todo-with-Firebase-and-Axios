@@ -32,7 +32,6 @@ export default new Vuex.Store({
 
     deleteTodo(state, key) {
       const index = state.todos.findIndex(item => item.id == key);
-      console.log(state.todos[index]);
       state.todos.splice(index, 1);
     },
 
@@ -121,9 +120,6 @@ export default new Vuex.Store({
       if (now >= expirationDate) {
         return;
       } else {
-        console.log(expirationDate);
-        console.log(now);
-        console.log(now - expirationDate);
         const userId = localStorage.getItem("userId");
         commit("authUser", { userId, token });
       }
@@ -135,10 +131,6 @@ export default new Vuex.Store({
           "/users/" + this.state.userId + ".json?auth=" + this.state.idToken,
           userData
         )
-        .then(res => {
-          console.log(res);
-          console.log(userData);
-        })
         .catch(error => console.log(error));
     },
 
@@ -204,6 +196,22 @@ export default new Vuex.Store({
         .then(res => {
           commit("deleteTodo", key);
         })
+        .catch(error => console.log(error));
+    },
+
+    changeStatus({ commit }, todo) {
+      axios
+        .patch(
+          "/users/" +
+            this.state.userId +
+            "/todos/" +
+            todo.id +
+            ".json?auth=" +
+            this.state.idToken,
+          {
+            status: todo.status
+          }
+        )
         .catch(error => console.log(error));
     },
 
