@@ -1,4 +1,4 @@
-# todo-app
+# VueJS Todo App with Firebase
 
 This is simple Todo App made with Vue. Firebase has been used as backend and [Axios](https://github.com/axios/axios) is used to perform different HTTP requests.
 
@@ -30,6 +30,6 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-##Demo Url
+## Demo Url
 
 [https://vue-todor.web.app/account](https://vue-todor.web.app/account)
