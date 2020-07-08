@@ -129,7 +129,7 @@ export default new Vuex.Store({
       axios
         .post(
           "/users/" + this.state.userId + ".json?auth=" + this.state.idToken,
-          userData
+          { email: userData.email, username: userData.username }
         )
         .catch(error => console.log(error));
     },
